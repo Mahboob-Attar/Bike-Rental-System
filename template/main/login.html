@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+<!-- {% load static %} -->
+{% block content %}
+
+<style>
+  .messages {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .messages li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  .error {
+    background-color: #ffdddd;
+    border: 1px solid #ff9999;
+    color: #990000;
+  }
+
+  .success {
+    background-color: #ddffdd;
+    border: 1px solid #99ff99;
+    color: #007700;
+  }
+
+  .info {
+    background-color: #e6f7ff;
+    border: 1px solid #99ccff;
+    color: #0066cc;
+  }
+</style>
+
+
+<body class="h-full">
+  <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8 dark:border dark:border-gray-700">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <!-- <img class="mx-auto h-10 w-auto" src="static/imgs/logo2.png" alt="Your Company"> -->
+      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900"> User Login
+    </div>
+
+
+    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <form class="space-y-6" action="#" method="POST">
+        {% csrf_token %}
+
+        {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+        <div class="mt-4">
+          <label for="user_type" class="block text-sm font-medium text-gray-700">Select Login Type:</label>
+          <div class="relative">
+              <select id="user_type" name="user_type" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-green-500 focus:ring focus:ring-green-200">
+                  <option value="user" class="text-green-500">User</option>
+                  <option value="host" class="text-blue-500">Host</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                  <!-- Use an icon or custom design for the dropdown arrow -->
+                  <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0l4 4a1 1 0 001.414 0l4-4a1 1 0 011.414 1.414l-5 5a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414z" clip-rule="evenodd" />
+                  </svg>
+              </div>
+          </div>
+      </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
+          <div class="mt-2">
+            <input id="email" name="email" type="email" autocomplete="email" required
+              class="block w-full rounded-md border-0 py-1.5  py-1 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
+            <div class="text-sm">
+              <a href="#" class="font-semibold text-green-500 hover:text-green-700">Forgot password?</a>
+            </div>
+          </div>
+          <div class="mt-2">
+            <input id="password" name="password" type="password" autocomplete="current-password" required
+              class="block w-full rounded-md border-0 py-1.5  py-1 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6">
+          </div>
+          <input class="mt-4 m-1" type="checkbox" onclick="myFunction()">Show Password
+        </div>
+
+        <div>
+          <button type="submit"
+            class="flex w-full justify-center rounded-md bg-green-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign
+            in</button>
+        </div>
+      </form>
+
+      <p class="mt-10 text-center text-sm text-gray-500">
+        New User?
+        <a href="{% url 'user_register' %}" class="font-semibold leading-6 text-green-500 hover:text-green-700">Click
+          here to
+          Create Account</a>
+      </p>
+
+
+    </div>
+  </div>
+
+
+  <script>
+    function myFunction() {
+      var x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+  </script>
+
+</body>
+
+
+{% endblock content %}
